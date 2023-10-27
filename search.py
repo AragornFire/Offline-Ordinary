@@ -15,7 +15,7 @@ def searchOrdinary(search_list: list) -> str: #Takes a list with all search term
             keepGoing = True #Continue reading line and printing are determined by this variable, which is reset to True here
             i = 0 #First index to check
             while (i < len(search_list)) and keepGoing: #While loop used to avoid 'break' and use keepGoing
-                if search_list[i] not in line: #Breaks the loop if a value in 
+                if search_list[i] not in line: #Breaks the loop if value is not in line
                     keepGoing = False
                 i = i + 1 #Increment
             if keepGoing: #If we would have kept going, we know all search terms are in the line, and so print it
@@ -31,22 +31,23 @@ def searchOrdinary(search_list: list) -> str: #Takes a list with all search term
                     cprint(line, code_color, end = '') #Printing a non-entry line, always code_color, might change it
     print()
 
-def searchOrdinaryExcl(include_list,exclude_list):
-    if include_list == []:
+#Search function that excludes elements in exclude_list
+def searchOrdinaryExcl(include_list: list,exclude_list: list) -> str: #Takes a list of elements to include and not any element in the other
+    if include_list == []: #If the user forgets to add an element to the first list, add the empty string
         include_list = ['']
-    with open(file_name, 'r') as f:
-        for line in f:
-            keepGoing = True
-            i = 0
-            while (i < len(include_list)) and keepGoing:
-                if include_list[i] not in line:
+    with open(file_name, 'r') as f: #File is read and referred to as f
+        for line in f: #Iterate over every line in the file
+            keepGoing = True #Continue reading line and printing are determined by this variable, which is reset to True here
+            i = 0 #First index to check
+            while (i < len(include_list)) and keepGoing: #While loop used to avoid 'break' and use keepGoing
+                if include_list[i] not in line: #Breaks the loop if value is not in line
                     keepGoing = False
-                for bad_item in exclude_list:
+                for bad_item in exclude_list: #If bad_item in line, just stop
                     if bad_item in line:
                         keepGoing = False
-                i = i + 1
-            if keepGoing:
-                if (" - " in line) and (len(line.split(" - ")) == 4):
+                i = i + 1 #Increment
+            if keepGoing: #Printing
+                if (" - " in line) and (len(line.split(" - ")) == 4): #Formatting
                     cprint(line.split(" - ")[0], code_color, end = '')
                     print(" - ", end = '')
                     cprint(line.split(" - ")[1], blazon_color, end = '')
@@ -58,7 +59,7 @@ def searchOrdinaryExcl(include_list,exclude_list):
                     cprint(line, code_color, end = '')
     print()
 
-def help():
+def help(): 
     print("Sorry, this section isn't fully fleshed out.\n")
     print("For specifics on a command, run:\n")
     cprint("ask('command')\n", "green")
