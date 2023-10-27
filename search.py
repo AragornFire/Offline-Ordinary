@@ -1,22 +1,25 @@
-from termcolor import colored, cprint
+from termcolor import colored, cprint #Get cprint command, I was told to import colored, don't know what it does, research needed
 
-file_name = 'majorOrdinary.txt'
+file_name = 'majorOrdinary.txt'#Default ordinary
+
+#Colors consistent with termcolor
 code_color = 'yellow'
 blazon_color = 'blue'
 name_color = 'light_blue'
 source_color = 'red'
 
-def searchOrdinary(search_list):
-    with open(file_name, 'r') as f:
-        for line in f:
-            keepGoing = True
-            i = 0
-            while (i < len(search_list)) and keepGoing:
-                if search_list[i] not in line:
+#The main searching function
+def searchOrdinary(search_list: list) -> str: #Takes a list with all search terms and outputs all the lines containing all the terms
+    with open(file_name, 'r') as f: #File is read and referred to as f
+        for line in f: #Iterate over every line in the file
+            keepGoing = True #Continue reading line and printing are determined by this variable, which is reset to True here
+            i = 0 #First index to check
+            while (i < len(search_list)) and keepGoing: #While loop used to avoid 'break' and use keepGoing
+                if search_list[i] not in line: #Breaks the loop if a value in 
                     keepGoing = False
-                i = i + 1
-            if keepGoing:
-                if (" - " in line) and (len(line.split(" - ")) == 4):
+                i = i + 1 #Increment
+            if keepGoing: #If we would have kept going, we know all search terms are in the line, and so print it
+                if (" - " in line) and (len(line.split(" - ")) == 4): #Uses the formatting for the entries to divide the line and color each part separately
                     cprint(line.split(" - ")[0], code_color, end = '')
                     print(" - ", end = '')
                     cprint(line.split(" - ")[1], blazon_color, end = '')
@@ -25,7 +28,7 @@ def searchOrdinary(search_list):
                     print(" - ", end = '')
                     cprint(line.split(" - ")[3], source_color, end = '')
                 else:
-                    cprint(line, code_color, end = '')
+                    cprint(line, code_color, end = '') #Printing a non-entry line, always code_color, might change it
     print()
 
 def searchOrdinaryExcl(include_list,exclude_list):
